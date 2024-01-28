@@ -1,1 +1,1 @@
-export const SEQUELIZE = "SEQUELIZE";
+export const SEQUELIZE = 'SEQUELIZE';

@@ -1,12 +1,4 @@
-import {
-  BelongsTo,
-  Column,
-  DataType,
-  ForeignKey,
-  Model,
-  Table,
-} from 'sequelize-typescript';
-import { Role } from './role.entity';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 @Table({ tableName: 'users' })
 export class User extends Model<User> {
@@ -36,17 +28,8 @@ export class User extends Model<User> {
   mobile: string;
 
   @Column({
-    type: DataType.UUID,
+    type: DataType.STRING,
     allowNull: false,
   })
   address: string;
-
-  @ForeignKey(() => Role)
-  @Column({
-    type: DataType.UUID,
-    allowNull: false,
-  })
-  roleid: string;
-  @BelongsTo(() => Role)
-  roles: Role;
 }

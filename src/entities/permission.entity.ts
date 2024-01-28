@@ -1,16 +1,16 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-@Table({ tableName: 'roles' })
-export class Role extends Model<Role> {
+@Table({ tableName: 'permissions' })
+export class Permission extends Model<Permission> {
   @Column({
     type: DataType.UUID,
     primaryKey: true,
   })
-  roleid: string;
+  permissionid: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  rolename: string;
+  permissiondesc: string;
 }

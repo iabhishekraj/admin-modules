@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateRoleDto } from './dto/create-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
 import { ROLE_REPOSITORY } from '../database/database.contants';
 import { Role } from 'src/entities/role.entity';
 
@@ -10,7 +9,6 @@ export class RoleService {
     @Inject(ROLE_REPOSITORY) private readonly roleRepository: typeof Role,
   ) {}
   async create(createRoleDto: CreateRoleDto): Promise<Role> {
-    console.log('service: createRoleDto', createRoleDto);
     return await this.roleRepository.create<Role>(createRoleDto);
   }
 
@@ -19,11 +17,15 @@ export class RoleService {
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} role`;
-  }
+    const role = await this.roleRepository.findOne({
+      where: {
+        roleid: id,
+      },
+    });
 
-  async update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
+    if (role) {
+      return role;
+    }
   }
 
   async remove(id: number) {

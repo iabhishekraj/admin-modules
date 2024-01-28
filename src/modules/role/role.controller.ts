@@ -1,20 +1,27 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('role')
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
+  @ApiOperation({ summary: 'Save a role in the db' })
+  @ApiResponse({
+    status: 201,
+    description: 'Role is saved successfully',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Validation error while creating role',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Save operation failed for role',
+  })
+  @ApiBody({ type: CreateRoleDto })
   @Post()
   async create(@Body() createRoleDto: CreateRoleDto): Promise<CreateRoleDto> {
     console.log('controller: createRoleDto', createRoleDto);
@@ -27,13 +34,12 @@ export class RoleController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.roleService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
-    return this.roleService.update(+id, updateRoleDto);
+  async findOne(@Param('id') id: string) {
+    console.log('request', id);
+    const role = await this.roleService.findOne(+id);
+    if (role) {
+    } else {
+    }
   }
 
   @Delete(':id')
