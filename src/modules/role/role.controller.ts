@@ -24,7 +24,6 @@ export class RoleController {
   @ApiBody({ type: CreateRoleDto })
   @Post()
   async create(@Body() createRoleDto: CreateRoleDto): Promise<CreateRoleDto> {
-    console.log('controller: createRoleDto', createRoleDto);
     return await this.roleService.create(createRoleDto);
   }
 
@@ -35,7 +34,6 @@ export class RoleController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    console.log('request', id);
     const role = await this.roleService.findOne(+id);
     if (role) {
     } else {
